@@ -80,6 +80,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="ClassFixtures\RecentlyUsedListStackFixture.cs" />
     <Compile Include="RecentlyUsedListTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

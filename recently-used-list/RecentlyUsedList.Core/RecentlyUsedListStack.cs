@@ -3,7 +3,7 @@ namespace RecentlyUsedList.Core
     using System;
     using System.Collections.Generic;
 
-    public class RecentlyUsedListStack : IUsedList
+    public class RecentlyUsedListStack : IRecentlyUsedList
     {
         public RecentlyUsedListStack(int upperLimit = 5)
         {

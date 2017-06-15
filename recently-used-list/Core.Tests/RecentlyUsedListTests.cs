@@ -1,6 +1,7 @@
 ﻿namespace Core.Tests
 {
     using System;
+    using ClassFixtures;
     using FluentAssertions;
     using RecentlyUsedList.Core;
     using Xunit;
@@ -34,18 +35,14 @@
             List can be non-sizable means without upper limit list can be created [Hint-try property or constructor initializers] (done)
          */
 
-        public RecentlyUsedListTests()
-        {
-            var list = new RecentlyUsedListStack();
-        }
-
         [Fact]
         public void RecentlyUsedList_IsCreated()
         {
             // Arrange
-            var list = new RecentlyUsedListStack();
+            var sut = new RecentlyUsedListStackFixture();
 
             // Act
+            var list = sut.Create();
 
             // Assert
             list.Should().BeOfType<RecentlyUsedListStack>();
@@ -55,9 +52,10 @@
         public void RecentlyUsedList_ListCount_ShouldBe0()
         {
             // Arrange
-            var list = new RecentlyUsedListStack();
+            var sut = new RecentlyUsedListStackFixture();
 
             // Act
+            var list = sut.Create();
 
             // Assert
             list.Count().Should().Be(0);
@@ -77,60 +75,46 @@
         }
 
         [Fact]
-        public void AddItem_AddedTwoItemsToList_CountShouldBe2()
+        public void Remove_LastItemAdded_ShouldBeFirstItemWhenRemovingFromList()
         {
             // Arrange
-            var list = new RecentlyUsedListStack();
+            var sut = new RecentlyUsedListStackFixture();
+            sut.AddManyToList();
+            var list = sut.Create();
+
+            // Act
+            var item = list.Remove();
+
+            // Assert
+            item.Should().Be("second item");
+            list.Count().Should().Be(1);
+        }
+
+        [Fact]
+        public void RecentlyUsedList_DoesNotAddDuplicateItems_CountShouldBe2()
+        {
+            // Arrange
+            var sut = new RecentlyUsedListStackFixture();
+            sut.AddManyToList();
+            var list = sut.Create();
 
             // Act
             list.Add("first item");
-            list.Add("second item");
 
             // Assert
             list.Count().Should().Be(2);
         }
 
         [Fact]
-        public void Remove_LastItemAdded_ShouldBeFirstItemWhenRemovingFromList()
-        {
-            // Arrange
-            var list = new RecentlyUsedListStack();
-
-            // Act
-            list.Add("first item");
-            list.Add("second item");
-
-            var item = list.Remove();
-
-            // Assert
-            item.Should().Be("second item");
-        }
-
-        [Fact]
-        public void RecentlyUsedList_DoesNotAddDuplicateItems_CountShouldBe3()
-        {
-            // Arrange
-            var list = new RecentlyUsedListStack();
-
-            // Act
-            list.Add("first item");
-            list.Add("second item");
-            list.Add("third item");
-            list.Add("first item");
-
-            // Assert
-            list.Count().Should().Be(3);
-        }
-
-        [Fact]
         public void RecentlyUsedList_DoesNotAddDuplicateItems_FirstitemOutShouldBeNamedSecondItem()
         {
             // Arrange
-            var list = new RecentlyUsedListStack();
+            var sut = new RecentlyUsedListStackFixture();
+            sut.AddManyToList();
+            var list = sut.Create();
 
             // Act
-            list.Add("first item");
-            list.Add("second item");
+
             list.Add("third item");
             list.Add("first item");
             list.Add("fourth item");
@@ -145,9 +129,9 @@
         public void GetItemByIndex_NegativeIndex_ShouldThrowIndexOutOfRangeException()
         {
             // Arrange
-            var list = new RecentlyUsedListStack();
-            list.Add("first item");
-            list.Add("second item");
+            var sut = new RecentlyUsedListStackFixture();
+            sut.AddManyToList();
+            var list = sut.Create();
 
             // Act
             Action act = () =>
@@ -164,6 +148,10 @@
         public void GetItemByIndex_IndexArgument_ShouldReturnSecondItemInList(int index, string expected)
         {
             // Arrange
+            //var sut = new RecentlyUsedListStackFixture();
+            //sut.AddManyToList();
+            //var list = sut.Create();
+
             var list = new RecentlyUsedListStack();
             list.Add("first item");
             list.Add("second item");
@@ -182,7 +170,8 @@
         public void Add_EmptyNullAndWhiteSpaceArgument_ShouldThrowArgumentNullException(string argument)
         {
             // Arrange
-            var list = new RecentlyUsedListStack();
+            var sut = new RecentlyUsedListStackFixture();
+            var list = sut.Create();
 
             // Act
             Action act = () =>
@@ -199,7 +188,8 @@
         public void CreateList_WithUpperLimit_ShouldBeFiveByDefault()
         {
             // Act
-            var list = new RecentlyUsedListStack();
+            var sut = new RecentlyUsedListStackFixture();
+            var list = sut.Create();
 
             // Assert
             list.UpperLimit.Should().Be(5);
@@ -210,7 +200,8 @@
         public void CreateList_SetUpperLimitTo10_ShouldBe10(int upperLimit, int expected)
         {
             // Act
-            var list = new RecentlyUsedListStack(upperLimit);
+            var sut = new RecentlyUsedListStackFixture(upperLimit);
+            var list = sut.Create();
 
             // Assert
             list.UpperLimit.Should().Be(expected);
@@ -220,7 +211,8 @@
         public void Add_ItemAboveDefinedUpperLimitOf5_ShouldStay5()
         {
             // Arrange
-            var list = new RecentlyUsedListStack();
+            var sut = new RecentlyUsedListStackFixture();
+            var list = sut.Create();
 
             // Act
             for (int i = 1; i <= 6; i++)
@@ -236,9 +228,9 @@
         public void Get_IndexAboveUpperLimit_ShouldThrowIndexOutOfRangeException()
         {
             // Arrange
-            var list = new RecentlyUsedListStack();
-            list.Add("first item");
-            list.Add("second item");
+            var sut = new RecentlyUsedListStackFixture();
+            sut.AddManyToList();
+            var list = sut.Create();
 
             // Act
             Action act = () =>
@@ -254,9 +246,9 @@
         public void Get_IndexDoesNotHaveValue_ShouldThrowIndexOutOfRangeException()
         {
             // Arrange
-            var list = new RecentlyUsedListStack();
-            list.Add("first item");
-            list.Add("second item");
+            var sut = new RecentlyUsedListStackFixture();
+            sut.AddManyToList();
+            var list = sut.Create();
 
             // Act
             Action act = () =>

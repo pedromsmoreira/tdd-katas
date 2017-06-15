@@ -1,6 +1,6 @@
 namespace RecentlyUsedList.Core
 {
-    public interface IUsedList
+    public interface IRecentlyUsedList
     {
         void Add(string item);
 
