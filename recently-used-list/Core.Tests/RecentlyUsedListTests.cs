@@ -36,26 +36,26 @@
 
         public RecentlyUsedListTests()
         {
-            var list = new RecentlyUsedList();
+            var list = new RecentlyUsedListStack();
         }
 
         [Fact]
         public void RecentlyUsedList_IsCreated()
         {
             // Arrange
-            var list = new RecentlyUsedList();
+            var list = new RecentlyUsedListStack();
 
             // Act
 
             // Assert
-            list.Should().BeOfType<RecentlyUsedList>();
+            list.Should().BeOfType<RecentlyUsedListStack>();
         }
 
         [Fact]
         public void RecentlyUsedList_ListCount_ShouldBe0()
         {
             // Arrange
-            var list = new RecentlyUsedList();
+            var list = new RecentlyUsedListStack();
 
             // Act
 
@@ -67,7 +67,7 @@
         public void AddItem_AddedOneItemToList_CountShouldBe1()
         {
             // Arrange
-            var list = new RecentlyUsedList();
+            var list = new RecentlyUsedListStack();
 
             // Act
             list.Add("first item");
@@ -80,7 +80,7 @@
         public void AddItem_AddedTwoItemsToList_CountShouldBe2()
         {
             // Arrange
-            var list = new RecentlyUsedList();
+            var list = new RecentlyUsedListStack();
 
             // Act
             list.Add("first item");
@@ -94,7 +94,7 @@
         public void Remove_LastItemAdded_ShouldBeFirstItemWhenRemovingFromList()
         {
             // Arrange
-            var list = new RecentlyUsedList();
+            var list = new RecentlyUsedListStack();
 
             // Act
             list.Add("first item");
@@ -110,7 +110,7 @@
         public void RecentlyUsedList_DoesNotAddDuplicateItems_CountShouldBe3()
         {
             // Arrange
-            var list = new RecentlyUsedList();
+            var list = new RecentlyUsedListStack();
 
             // Act
             list.Add("first item");
@@ -126,7 +126,7 @@
         public void RecentlyUsedList_DoesNotAddDuplicateItems_FirstitemOutShouldBeNamedSecondItem()
         {
             // Arrange
-            var list = new RecentlyUsedList();
+            var list = new RecentlyUsedListStack();
 
             // Act
             list.Add("first item");
@@ -145,7 +145,7 @@
         public void GetItemByIndex_NegativeIndex_ShouldThrowIndexOutOfRangeException()
         {
             // Arrange
-            var list = new RecentlyUsedList();
+            var list = new RecentlyUsedListStack();
             list.Add("first item");
             list.Add("second item");
 
@@ -164,7 +164,7 @@
         public void GetItemByIndex_IndexArgument_ShouldReturnSecondItemInList(int index, string expected)
         {
             // Arrange
-            var list = new RecentlyUsedList();
+            var list = new RecentlyUsedListStack();
             list.Add("first item");
             list.Add("second item");
 
@@ -182,7 +182,7 @@
         public void Add_EmptyNullAndWhiteSpaceArgument_ShouldThrowArgumentNullException(string argument)
         {
             // Arrange
-            var list = new RecentlyUsedList();
+            var list = new RecentlyUsedListStack();
 
             // Act
             Action act = () =>
@@ -199,7 +199,7 @@
         public void CreateList_WithUpperLimit_ShouldBeFiveByDefault()
         {
             // Act
-            var list = new RecentlyUsedList();
+            var list = new RecentlyUsedListStack();
 
             // Assert
             list.UpperLimit.Should().Be(5);
@@ -210,7 +210,7 @@
         public void CreateList_SetUpperLimitTo10_ShouldBe10(int upperLimit, int expected)
         {
             // Act
-            var list = new RecentlyUsedList(upperLimit);
+            var list = new RecentlyUsedListStack(upperLimit);
 
             // Assert
             list.UpperLimit.Should().Be(expected);
@@ -220,7 +220,7 @@
         public void Add_ItemAboveDefinedUpperLimitOf5_ShouldStay5()
         {
             // Arrange
-            var list = new RecentlyUsedList();
+            var list = new RecentlyUsedListStack();
 
             // Act
             for (int i = 1; i <= 6; i++)
@@ -236,7 +236,7 @@
         public void Get_IndexAboveUpperLimit_ShouldThrowIndexOutOfRangeException()
         {
             // Arrange
-            var list = new RecentlyUsedList();
+            var list = new RecentlyUsedListStack();
             list.Add("first item");
             list.Add("second item");
 
@@ -254,7 +254,7 @@
         public void Get_IndexDoesNotHaveValue_ShouldThrowIndexOutOfRangeException()
         {
             // Arrange
-            var list = new RecentlyUsedList();
+            var list = new RecentlyUsedListStack();
             list.Add("first item");
             list.Add("second item");
 

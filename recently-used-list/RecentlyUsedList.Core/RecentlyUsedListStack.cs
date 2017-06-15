@@ -3,9 +3,9 @@ namespace RecentlyUsedList.Core
     using System;
     using System.Collections.Generic;
 
-    public class RecentlyUsedList : IUsedList
+    public class RecentlyUsedListStack : IUsedList
     {
-        public RecentlyUsedList(int upperLimit = 5)
+        public RecentlyUsedListStack(int upperLimit = 5)
         {
             this.List = new Stack<string>();
             this.UpperLimit = upperLimit;
