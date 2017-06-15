@@ -3,7 +3,7 @@ namespace RecentlyUsedList.Core
     using System;
     using System.Collections.Generic;
 
-    public class RecentlyUsedList
+    public class RecentlyUsedList : IUsedList
     {
         public RecentlyUsedList(int upperLimit = 5)
         {
@@ -39,23 +39,6 @@ namespace RecentlyUsedList.Core
             }
         }
 
-        private bool UpperLimitReached()
-        {
-            if (this.Count() == this.UpperLimit)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private static void GuardAgainsNullArgumentException(string item)
-        {
-            if (item.IsNullOrWhiteSpace())
-            {
-                throw new ArgumentNullException();
-            }
-        }
-
         public string Remove()
         {
             return this.List.Pop();
@@ -71,6 +54,23 @@ namespace RecentlyUsedList.Core
             var array = this.List.ToArray();
 
             return array[index];
+        }
+
+        private bool UpperLimitReached()
+        {
+            if (this.Count() == this.UpperLimit)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private static void GuardAgainsNullArgumentException(string item)
+        {
+            if (item.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentNullException();
+            }
         }
 
         private void MoveDuplicatedItem(string item)
